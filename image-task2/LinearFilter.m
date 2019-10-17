@@ -25,14 +25,24 @@ for i=1:size(I,1)-1
             for y=1:size(Filter,2)
                 sum=sum+(B(m,n)*Filter(x,y));
                 n=n+1;
+                
             end
             n=j;
             m=m+1;
         end
+        sum=sum/255;
            if (strcmp(Postproc,'absolute')==1)
             Out(i,j)=abs(sum);
            elseif(strcmp(Postproc,'none')==1)
         Out(i,j)=sum;
+            elseif(strcmp(Postproc,'cutoff')==1)
+                if(sum>255)
+        Out(i,j)=255;
+                elseif(sum<0)
+                     Out(i,j)=0;
+                else
+                     Out(i,j)=sum;
+                end
         end
     end
 end
